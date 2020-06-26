@@ -1,0 +1,66 @@
+﻿@model List<SubscriptionList>
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<h2>Account Page</h2>
+<hr />
+<div class="container">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Created</th>
+            <td>CustomerId</td>
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td id="CreatedAt" >@item.Created</td>
+                <td>@item.CustomerId</td>
+                <td>@item.Status</td>
+                @if (item.Status != "canceled")
+                {
+                    <td><a href="~/Account/Cancel?id=@item.Id" class="btn btn-primary">Cancel</a></td>
+                    <td><a href="~/Account/GenerateLink?CustomerId=@item.CustomerId" class="btn btn-primary">Manage Billing</a></td>
+
+                }
+                else
+                {
+                    <td id="CancelledAt">Cancelled At @item.CanceledAt</td>
+                    <td><a href="~/Account/Refund?id=@item.Id" class="btn btn-primary">Refund</a></td>
+
+                }
+            </tr>
+        }
+
+    </table>
+
+    <a style="margin-top: 20px" class="btn btn-primary" href="/Account/Subscription">Add Plan</a>
+
+</div>
+
+
+
